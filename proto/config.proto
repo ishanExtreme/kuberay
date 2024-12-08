@@ -132,7 +132,7 @@ message ComputeTemplate {
   // Optional. Name and number of the extended resources
   map<string, uint32> extended_resources = 8;
   // Optional, init container definition
-  google.protobuf.Struct initContainer = 9;
+  google.protobuf.Struct init_container = 9;
 
 }
 
