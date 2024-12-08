@@ -866,6 +866,16 @@ func NewComputeTemplate(runtime *api.ComputeTemplate) (*corev1.ConfigMap, error)
 		dmap["tolerations"] = string(t)
 	}
 
+	// Add initContainer if defined
+	if runtime.InitContainer != nil {
+		// Convert google.protobuf.Struct to JSON
+		initContainerJSON, err := runtime.InitContainer.MarshalJSON()
+		if err != nil {
+			return nil, fmt.Errorf("failed to marshal initContainer for compute template %s: %w", runtime.Name, err)
+		}
+		dmap["init_container"] = string(initContainerJSON)
+	}
+
 	config := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      runtime.Name,
